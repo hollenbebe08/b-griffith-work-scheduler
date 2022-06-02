@@ -1,6 +1,8 @@
-//create tasks
- var tasks = {};
+saveBtnEl = document.getElementById("#eight");
+taskEl = $("task").value;
 
- var createTask = function() {
-     //create elements that make up a task item
- }
+var saveTask = function() {
+    localStorage.getItem("task item", taskEl);
+};
+
+saveBtnEl.addEventListener("click", saveTask); 
