@@ -1,6 +1,8 @@
 //Variables
-var tasks = [];
-var timeBlock = $(".time-block");
+// var tasks = {};
+// var timeBlock = $(".time-block");
+// var currentDay = $("#currentDay");
+// var schedule = $(".container");
 
 //set current day
 var today = moment().format("MMMM Do YYYY");
@@ -9,37 +11,40 @@ $("#currentDay").append(today);
 //set current hour
 var currentHour = moment().hour();
 
-//setup the timeblock
-timeBlock.each(function(){
-    var currentBlock = $(this);
-    var taskHour = parseInt($(currentBlock).attr("id"));
-
-    var taskObj = {
-        hour: taskHour,
-        text: ""
-    }
-    
-    //add item to tasks array
-    tasks.push(taskObj);
-});
-
-
-// // Time container to handle the clicking of buttons
-// var timeContainer.onclick = function() {
-//     //to prevent default behavior of the button
-//     event.preventDefault();
-//     //stores elment as a variable
-//     var element = event.target;
-//     //if target element is a button
-//     if(element.nodeName === "BUTTON") {
-//         saveTask()
-//     }
-// };
+//add the class colors for the time of day (past, present, future) relative to the task
+currentStateOfBlocks = function(timeBlock){
+        if(hour === currentHour){
+            return "present"
+        }
+        if(hour < currentHour) {
+            return "past"
+        }
+        if(hour > currentHour) {
+            return "future"
+        }
+};
 
 
-// // saveTask function
-// var saveTask = function() {
-//     localStorage.setItem("tasks", JSON.stringify());
-// };
+var scheduler = function (currentStateOfBlocks) {
+    var taskHour = Number.parseInt(currentStateOfBlocks.id, 10)
+ 
+    var saveButton = currentStateOfBlocks.querySelector(".saveBtn")
 
+    var taskText = currentStateOfBlocks.querySelector("textarea")
 
+    // var hourState = currentStateOfBlocks(taskHour)
+
+    // taskText.classList.add(hourState)
+
+    //save tasks with a click
+    saveButton.addEventListener("click", function () {
+        var taskInput = taskText.value
+        var saveTasks = localStorage.setItem(taskHour, (taskInput));
+    });
+
+    //connnect the corresponding text with the corresponding hour when loaded
+    // function loadTask(){
+    // tasks = JSON.parse(localStorage.getItem("tasks"));
+};
+
+document.querySelectorAll("#schedule>.row").forEach(scheduler);
